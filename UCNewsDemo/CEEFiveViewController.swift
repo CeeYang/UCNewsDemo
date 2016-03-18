@@ -19,6 +19,9 @@ class CEEFiveViewController: UIViewController {
         lable.text = "再然后,你笑了....."
         lable.textAlignment = NSTextAlignment.Center
         view.addSubview(lable)
+        
+
+        
     }
 
     override func didReceiveMemoryWarning() {

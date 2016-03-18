@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		158F10BF1C9ACCCB00B94C9E /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F10BE1C9ACCCB00B94C9E /* ViewFactory.swift */; };
 		15F1563E1C97D60E001FA77A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F1563D1C97D60E001FA77A /* AppDelegate.swift */; };
 		15F156431C97D60E001FA77A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15F156411C97D60E001FA77A /* Main.storyboard */; };
 		15F156451C97D60E001FA77A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15F156441C97D60E001FA77A /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		158F10BE1C9ACCCB00B94C9E /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		15F1563A1C97D60E001FA77A /* UCNewsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UCNewsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15F1563D1C97D60E001FA77A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15F156421C97D60E001FA77A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			children = (
 				15F1563D1C97D60E001FA77A /* AppDelegate.swift */,
 				15F1564F1C97D61D001FA77A /* CEEMainViewController.swift */,
+				158F10BE1C9ACCCB00B94C9E /* ViewFactory.swift */,
 				15F156511C97DDA5001FA77A /* CEEFirstViewController.swift */,
 				15F156531C97DDB3001FA77A /* CEESecondViewController.swift */,
 				15F156551C97DDBD001FA77A /* CEEThirdViewController.swift */,
@@ -158,6 +161,7 @@
 				15F1565A1C98213A001FA77A /* CEEFiveViewController.swift in Sources */,
 				15F156521C97DDA5001FA77A /* CEEFirstViewController.swift in Sources */,
 				15F1563E1C97D60E001FA77A /* AppDelegate.swift in Sources */,
+				158F10BF1C9ACCCB00B94C9E /* ViewFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,32 +18,29 @@
 import UIKit
 
 class CEEMainViewController: UIViewController,UIScrollViewDelegate {
-
     
-    //MARK: - 初始化控制器
-    let firstVC               = CEEFirstViewController()
-    let secndVC               = CEESecondViewController()
-    let thirdVC               = CEEThirdViewController()
-    let fourVC                = CEEFourViewController()
-    let fiveVC                = CEEFiveViewController()
+    //MARK - 控件与相关数组
+   internal var headScrollView        = UIScrollView()            /** 头部导航视图  */
+   internal var MainScrollView        = UIScrollView()            /** 主滚动视图    */
+   internal var indicatorView         = UIView()                  /** 指示器视图    */
+   internal var headBtnArray          = NSArray()                 /** 头部按钮数组  */
+   internal var viewControllrArray    = NSArray()
     
-    var currentVC             = UIView()                  /** 当前视图     */
-    var headScrollView        = UIScrollView()            /** 头部导航视图  */
-    var MainScrollView        = UIScrollView()            /** 主滚动视图    */
-    var indicatorView         = UIView()                  /** 指示器视图    */
-    var headBtnArray          = NSArray()                 /** 头部按钮数组  */
-    var viewArray             = NSArray()
     
     //MARK: - 边距值
+   public let mainScrollViewTop     : CGFloat = 100.0           /** 没有导航栏的时候将此值改为40 */
+   public let headScrollViewTop     : CGFloat = 60.0            /** 没有导航栏的时候将此值改为0 */
+    
+    let headScrollViewHeight  : CGFloat = 40.0
+    var headScrollViewWidth   : CGFloat = 0.0         /** 初始化时创建的值,后面会根据 headArray 的内容设置具体的值,此处0无实意 */
+    let buttonWidth           : CGFloat = 100
+    let buttonHeigth          : CGFloat = 40.0
+    let screenHeigth          : CGFloat = UIScreen.mainScreen().bounds.size.height
+    let screenWidth           : CGFloat = UIScreen.mainScreen().bounds.size.width
+    let indicatorHeight       : CGFloat = 2.0
+    var indicatorTop          : CGFloat = 0.0
     var indicatorLeftDistance : CGFloat = 0.0
-    let headScrollViewHeight:   CGFloat = 40.0
-    var headScrollViewWidth:    CGFloat = 0.0         /** 初始化时创建的值,后面会根据 headArray 的内容设置具体的值,此处0无实意 */
-    let buttonWidth:            CGFloat = 100
-    let buttonHeigth:           CGFloat = 40.0
-    let screenHeigth:           CGFloat = UIScreen.mainScreen().bounds.size.height
-    let screenWidth:            CGFloat = UIScreen.mainScreen().bounds.size.width
-    let indicatorHeight :       CGFloat = 2.0
-    var indicatorTop:           CGFloat = 0.0
+    
     
     //MARK: -
     override func viewDidLoad() {
@@ -51,26 +48,42 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
         
         title = "UC浏览器Demo"
         
-        /** 添加导航 btn 时候,请一并添加一个 view              */
-        /** 不然调用 addButtonAndView() 时会出现数组越界       */
-        headBtnArray = ["深圳","科技","艺术","音乐","舞蹈"]
-        viewArray    = [firstVC,secndVC,thirdVC,fourVC,fiveVC]
+        let btnArr            = ["深圳","科技","艺术","音乐","舞蹈"]
         
-        automaticallyAdjustsScrollViewInsets = false        /** 取消autolayout功能 (要想scrollView滚动,必须取消autolayout) */
+        let ControlsArr        = [CEEFirstViewController(),
+                                  CEESecondViewController(),
+                                  CEEThirdViewController(),
+                                  CEEFourViewController(),
+                                  CEEFiveViewController()]
         
-        addHeadScrollView()
-
-        addMainScrollView()
-
-        addIndicatorView()
+        CEE_setupScrollviewWithHeaderBtnArr(btnArr, ControllersArr: ControlsArr)
         
-        addButtonAndView()
-
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func CEE_setupScrollviewWithHeaderBtnArr(headerBtnArr:NSArray, ControllersArr:NSArray) -> UIView  {
+        
+        headBtnArray       = headerBtnArr
+        viewControllrArray = ControllersArr
+        
+        /** 取消autolayout功能 (要想scrollView滚动,必须取消autolayout) */
+        automaticallyAdjustsScrollViewInsets = false
+        
+        addHeadScrollView()
+        
+        addMainScrollView()
+        
+        addIndicatorView()
+        
+        addButtonAndView()
+        
+        return view
     }
     
     //MARK: - 自定义方法
@@ -83,8 +96,8 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
         *  contentSize         可滚动区域
         *  contentOffset       滚动当前位置,默认为0
         */
-        headScrollViewWidth            = CGFloat(headBtnArray.count * 100)
-        headScrollView                 = UIScrollView(frame: CGRectMake(0, 60, screenWidth, headScrollViewHeight))
+        headScrollViewWidth            = CGFloat(headBtnArray.count) * buttonWidth
+        headScrollView                 = UIScrollView(frame: CGRectMake(0, headScrollViewTop, screenWidth, headScrollViewHeight))
         headScrollView.backgroundColor = UIColor.whiteColor()
         headScrollView.contentSize     = CGSizeMake(headScrollViewWidth, buttonHeigth)
         headScrollView.bounces         = false
@@ -95,7 +108,7 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
     /**  主滚动视图      */
     func addMainScrollView () {
         
-        MainScrollView = UIScrollView(frame: CGRectMake(0, 100, screenWidth, screenHeigth - 100))
+        MainScrollView = UIScrollView(frame: CGRectMake(0, mainScrollViewTop, screenWidth, screenHeigth - mainScrollViewTop))
         MainScrollView.contentSize     = CGSizeMake((CGFloat)(headBtnArray.count) * screenWidth, 0)
         MainScrollView.pagingEnabled   = true
         MainScrollView.delegate        = self
@@ -115,11 +128,11 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
     /**  添加按钮和主视图 */
     func addButtonAndView () {
         
-        for var index = 0; index < self.headBtnArray.count; index++
+        for var index = 0; index < headBtnArray.count; index++
         {
             /**  button */
             let btn               = UIButton(type: UIButtonType.System)
-            let leftBtnDistance   = CGFloat(index * 100 + 0)
+            let leftBtnDistance   = (CGFloat(index) * buttonWidth + 0.0)
             
             btn.frame = CGRectMake(leftBtnDistance, 0, buttonWidth, headScrollViewHeight)
             btn.tag   = index + 0
@@ -128,15 +141,13 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
             headScrollView.addSubview(btn)
             
             /** view */
-            let leftViewDistance          = CGFloat(index) * screenWidth
-            viewArray[index].view!!.frame = CGRectMake(leftViewDistance, 0, screenWidth, screenHeigth)
+            let leftViewDistance                   = CGFloat(index) * screenWidth
+            viewControllrArray[index].view!!.frame = CGRectMake(leftViewDistance, 0, screenWidth, screenHeigth)
+            
+            /** addSubview */
+            let controller :UIViewController = viewControllrArray[index] as! UIViewController
+            MainScrollView.addSubview(controller.view)
         }
-        
-        MainScrollView.addSubview(firstVC.view)
-        MainScrollView.addSubview(secndVC.view)
-        MainScrollView.addSubview(thirdVC.view)
-        MainScrollView.addSubview(fourVC.view)
-        MainScrollView.addSubview(fiveVC.view)
     }
     
     /** button 的点击事件 */
@@ -144,18 +155,11 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
         
         indicatorSettingWithTag(button.tag)
         
-        let leftViewDistance        = CGFloat(button.tag) * screenWidth
+        let leftViewDistance = CGFloat(button.tag) * screenWidth
 
-        switch button.tag{
-        case 0:
-            MainScrollView.setContentOffset(CGPointMake(leftViewDistance, 0), animated: true)
-        case 1:
-            MainScrollView.setContentOffset(CGPointMake(leftViewDistance, 0), animated: true)
-        case 2:
-            MainScrollView.setContentOffset(CGPointMake(leftViewDistance, 0), animated: true)
-        case 3:
-            MainScrollView.setContentOffset(CGPointMake(leftViewDistance, 0), animated: true)
-        case 4:
+        switch button.tag
+        {
+        case 0..<headBtnArray.count :
             MainScrollView.setContentOffset(CGPointMake(leftViewDistance, 0), animated: true)
         default: break
         }
@@ -164,7 +168,7 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
     /** 指示器的显示 */
     func indicatorSettingWithTag(tag:NSInteger) {
         UIView.animateWithDuration(1.0) { () -> Void in
-            self.indicatorLeftDistance = CGFloat(tag * 100)
+            self.indicatorLeftDistance        = (CGFloat(tag) * self.buttonWidth)
             self.indicatorView.frame.origin.x = self.indicatorLeftDistance
             self.view.layoutIfNeeded()
         }

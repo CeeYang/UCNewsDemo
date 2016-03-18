@@ -20,9 +20,9 @@ class CEEFirstViewController: UIViewController {
         lable.textAlignment = NSTextAlignment.Center
         view.addSubview(lable)
         
-        /** 由于是使用 addChildView 方式添加的视图,
-        * 所以此处的 self.navigationItem 赋值会被调用但主视图的中导航标题不会改变
-        */
+        let arr = ["hhe","hhe"]
+        
+        
         
     }
 

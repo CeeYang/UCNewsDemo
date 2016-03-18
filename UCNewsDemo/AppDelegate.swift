@@ -17,12 +17,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-
-        let mainViewController = CEEMainViewController()
-        let nav = UINavigationController(rootViewController: mainViewController)
+        let nav = UINavigationController(rootViewController: CEEMainViewController())
         self.window!.rootViewController = nav
-        
         self.window!.makeKeyAndVisible()
+        
+        
+        /** 添加导航 btn 时候,请一并添加一个 view                      */
+         /** 不然调用 addButtonAndView() 时会出现数组越界               */
+        
+        let btnArr            = ["深圳","科技","艺术","音乐","舞蹈"]
+        
+        let ControlsArr        = [CEEFirstViewController(),
+            CEESecondViewController(),
+            CEEThirdViewController(),
+            CEEFourViewController(),
+            CEEFiveViewController()]
+        
         
         return true
     }
