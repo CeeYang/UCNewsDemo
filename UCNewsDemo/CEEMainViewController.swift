@@ -128,7 +128,7 @@ class CEEMainViewController: UIViewController,UIScrollViewDelegate {
     /**  添加按钮和主视图 */
     func addButtonAndView () {
         
-        for var index = 0; index < headBtnArray.count; index++
+        for index in 0..<headBtnArray.count
         {
             /**  button */
             let btn               = UIButton(type: UIButtonType.System)

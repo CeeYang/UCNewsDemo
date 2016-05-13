@@ -25,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /** 添加导航 btn 时候,请一并添加一个 view                      */
          /** 不然调用 addButtonAndView() 时会出现数组越界               */
         
-        let btnArr            = ["深圳","科技","艺术","音乐","舞蹈"]
-        
-        let ControlsArr        = [CEEFirstViewController(),
-            CEESecondViewController(),
-            CEEThirdViewController(),
-            CEEFourViewController(),
-            CEEFiveViewController()]
+//        let btnArr            = ["深圳","科技","艺术","音乐","舞蹈"]
+//        
+//        let ControlsArr        = [CEEFirstViewController(),
+//                                  CEESecondViewController(),
+//                                  CEEThirdViewController(),
+//                                  CEEFourViewController(),
+//                                  CEEFiveViewController()]
         
         
         return true
